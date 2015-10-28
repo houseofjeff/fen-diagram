@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="fendiagram.js"></script>
+    <script>
+    $(document).ready( function() {
+   
+        var highlights = [ [0,0,0,0,0,0,0,0],
+                           [0,0,0,0,1,0,0,0],
+                           [0,0,0,0,1,0,0,0],
+                           [0,0,0,0,1,0,0,0],
+                           [0,0,0,0,0,0,0,0],
+                           [0,0,0,0,0,0,0,0],
+                           [0,0,0,0,0,0,0,0],
+                           [0,0,0,0,0,0,0,0]]
+
+
+        var boardFEN = "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R";
+	var boardFEN = "4r1k1/1b3p1p/ppq3p1/2p5/8/1P3R1Q/PBP3PP/7K";
+        var cb = ChessBoard("board", boardFEN);
+        //cb.drawBoard(boardFEN, highlights);
+    });
+    </script>
+</head>
+<body>
+   <div id="board" style="height:300px;width:300px;border:1px solid black;">
+   </div>
+</body>
+</html>
+
