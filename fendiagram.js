@@ -3,18 +3,18 @@
 function ChessBoard( divname, startingFEN, highlights) {
 
     // Make the board square within the div
-    var div = $('#'+divname);
-    var boardSize = Math.min(div.height(), div.width());
+    var div = document.getElementById(divname);
+    var boardSize = Math.min(div.scrollHeight, div.scrollHeight);
 
     var imageObj = new Image();
     imageObj.board = this;
     imageObj.startingFEN = startingFEN;
 
     // Create the canvas & context for this board
-    var canvtag = '<canvas width="'+boardSize+'" height="'+boardSize+'">';
-    var canvas = $(canvtag)[0];
-    div.append(canvas);
-    this.ctx = canvas.getContext("2d");
+    var canvtag = document.createElement('canvas');
+    canvtag.height = canvtag.width = boardSize; 
+    div.appendChild(canvtag);
+    this.ctx = canvtag.getContext("2d");
 
     // Some values that'll be reused
     this.squarePixels = boardSize/8;
@@ -23,7 +23,7 @@ function ChessBoard( divname, startingFEN, highlights) {
 
     this.iconHeight = 162;
     this.imgLookup = { 'R' : [0, 150],   'B' : [153, 178],  'Q' : [336, 176],
-                       'K' : [515, 176], 'N' : [705, 170],  'P' : [888, 160] }
+                       'K' : [515, 176], 'N' : [705, 170],  'P' : [878, 160] }
 
     this.lightColor = "#FFFFFF";
     this.darkColor = "#CCCCCC";
