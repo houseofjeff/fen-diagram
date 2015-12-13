@@ -1,14 +1,12 @@
 //==============================================================================
+// fen-diagram by houseofjeff (https://github.com/houseofjeff/fen-diagram)
 
-function ChessBoard( divname, startingFEN, highlights) {
+function FEN_Diagram( divname, startingFEN, options) {
+    var options = options || {};
 
     // Make the board square within the div
     var div = document.getElementById(divname);
     var boardSize = Math.min(div.scrollHeight, div.scrollHeight);
-
-    var imageObj = new Image();
-    imageObj.board = this;
-    imageObj.startingFEN = startingFEN;
 
     // Create the canvas & context for this board
     var canvtag = document.createElement('canvas');
@@ -25,10 +23,11 @@ function ChessBoard( divname, startingFEN, highlights) {
     this.imgLookup = { 'R' : [0, 150],   'B' : [153, 178],  'Q' : [336, 176],
                        'K' : [515, 176], 'N' : [705, 170],  'P' : [878, 160] }
 
-    this.lightColor = "#FFFFFF";
-    this.darkColor = "#CCCCCC";
-    this.lightHighlight = "#FFAA00"
-    this.darkHighlight = "#FF7744";
+    this.lightColor = options["lightColor"] || "#FFFFFF";
+    this.darkColor = options["darkColor"] || "#CCCCCC";
+    this.lightHighlight = options["lightHighlight"] || "#FFAA00";
+    this.darkHighlight = options["darkHighlight"] || "#FF7744";
+    this.highlights = options["highlights"];
 
     //-------------------------------------------------------------------------
     // Convert this rank from Forsyth-Edwards notation into an array
@@ -39,10 +38,8 @@ function ChessBoard( divname, startingFEN, highlights) {
 
         for (var i = 0; i < rankStr.length; i++) {
             var ch = rankStr[i];
-            if ((ch >= '1') && (ch <= '8')) {
-                for (var j = 0; j < ch; j++)
-                    arry.push('');
-            }
+            if ((ch >= '1') && (ch <= '8')) 
+                arry = arry.concat(Array(parseInt(ch)));
             else
                 arry.push(ch);
         }
@@ -53,12 +50,13 @@ function ChessBoard( divname, startingFEN, highlights) {
     //-------------------------------------------------------------------------
     // Redraw the board (by redrawing the squares)
 
-    this.drawBoard = function(boardFEN, highlightMatrix) {
+    this.drawBoard = function(boardFEN) {
+        var highlightMatrix = this.highlights
     	console.log("Drawing", boardFEN, highlightMatrix);
         var ranks = boardFEN.split('/');
 
         for (var j = 0; j < 8; j++) {
-            var rank = fenRankToArray( ranks[j] );
+            var rank = this.fenRankToArray( ranks[j] );
             for (var i = 0; i < 8; i++) {
                 var highlighted = (typeof highlightMatrix === 'undefined') ? false : highlightMatrix[j][i] == 1;
                 var piece = (boardFEN == null) ? '' : rank[i];
@@ -75,14 +73,14 @@ function ChessBoard( divname, startingFEN, highlights) {
         var isDarkSquare = ((row%2) + (col%2)) == 1;
 
         if (highlighted) 
-            ctx.fillStyle = isDarkSquare ? this.darkHighlight : this.lightHighlight;
+            this.ctx.fillStyle = isDarkSquare ? this.darkHighlight : this.lightHighlight;
         else
-            ctx.fillStyle = isDarkSquare ? this.darkColor : this.lightColor;
+            this.ctx.fillStyle = isDarkSquare ? this.darkColor : this.lightColor;
         
         var sqsz = this.squarePixels;
         this.ctx.fillRect( col*sqsz, row*sqsz, sqsz, sqsz );
 
-        if (piece == '') 
+        if (piece == null) 
             return
 
         var imgSettings = this.imgLookup[piece.toUpperCase()];
@@ -95,14 +93,11 @@ function ChessBoard( divname, startingFEN, highlights) {
                            this.pieceSize, this.pieceSize );
     }
    
-    imageObj.onload = function() {
-        if ( typeof this.startingFEN === 'undefined' ) 
-	    this.startingFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
-
-        this.board.drawBoard(this.startingFEN, highlights);
+    // Finally, load the image file and, when it arrives, draw the board
+    this.piecesImg = new Image();
+    this.piecesImg.board = this;
+    this.piecesImg.onload = function() {
+        this.board.drawBoard( startingFEN || "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR" );
     }
-    this.piecesImg = imageObj;
-    imageObj.src = 'pieces.png';
-
-    return this;
+    this.piecesImg.src = 'pieces.png';
 }
