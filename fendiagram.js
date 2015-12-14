@@ -1,11 +1,11 @@
 //==============================================================================
 // fen-diagram by houseofjeff (https://github.com/houseofjeff/fen-diagram)
 
-function FEN_Diagram( divname, startingFEN, options) {
+function FEN_Diagram( divId, startingFEN, options) {
     var options = options || {};
 
     // Make the board square within the div
-    var div = document.getElementById(divname);
+    var div = document.getElementById(divId);
     var boardSize = Math.min(div.scrollHeight, div.scrollHeight);
 
     // Create the canvas & context for this board
@@ -52,7 +52,6 @@ function FEN_Diagram( divname, startingFEN, options) {
 
     this.drawBoard = function(boardFEN) {
         var highlightMatrix = this.highlights
-    	console.log("Drawing", boardFEN, highlightMatrix);
         var ranks = boardFEN.split('/');
 
         for (var j = 0; j < 8; j++) {
@@ -64,7 +63,6 @@ function FEN_Diagram( divname, startingFEN, options) {
             }
         }
     }
-
 
     //-------------------------------------------------------------------------
     // Redraw the squares, one at a time.  
@@ -93,11 +91,13 @@ function FEN_Diagram( divname, startingFEN, options) {
                            this.pieceSize, this.pieceSize );
     }
    
+    //-------------------------------------------------------------------------
     // Finally, load the image file and, when it arrives, draw the board
+
     this.piecesImg = new Image();
     this.piecesImg.board = this;
     this.piecesImg.onload = function() {
         this.board.drawBoard( startingFEN || "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR" );
     }
-    this.piecesImg.src = 'pieces.png';
+    this.piecesImg.src = options['piecesImgSrc'] || 'pieces.png';
 }
