@@ -12,12 +12,32 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <script>
+    var currentFen = 0;
+    var fens = [ 
+                 "4r1k1/1b3p1p/ppq3p1/2p5/8/1P3R1Q/PBP3PP/7K",
+                 "4p3/3p1p2/3p4/2ppp3/3p4/3p4/3p4/2ppp3",
+                 "rnbqkbnr/pppppppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R",
+                 "8/k2p4/8/2PKB/8/8/4n3/8",
+                 "k1k1k1k1/1q1q1q1q/pPpPpPpPpP/8/8/PpPpPpPp/RnbrNBRnbrNB/RRRRRRRR",
+                 "8/8/4K3/8/3k4/8/8/8", 
+                 "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR",
+                 "Q7/4Q3/1Q6/5Q2/2Q5/6Q1/3Q4/7Q"];
+    
+    setTimeout(function () {
+        setInterval( function() {
+            currentFen = (currentFen+1) % fens.length;
+            masterfen.drawBoard( fens[currentFen] );
+            document.getElementById('fendisplay').innerHTML = fens[currentFen];
+        }, 3000);
+    }, 3000 );
+    </script>
   </head>
   <body>
     <div class="wrapper">
       <header>
-        <h1>Fen-diagram</h1>
-        <p>A Javascript library to generate Chess diagrams from Forsyth-Edwards Notation</p>
+        <h1>FEN-diagram</h1>
+        <p>A Javascript library to generate Chess diagrams from Forsyth-Edwards Notation in 100(ish) lines.</p>
 
         <p class="view"><a href="https://github.com/houseofjeff/fen-diagram">View the Project on GitHub <small>houseofjeff/fen-diagram</small></a></p>
 
@@ -35,12 +55,12 @@
 
 
    <div id="board1" style="height:240px;width:240px;border:1px solid black;">
-       <script>new FEN_Diagram( "board1", "4r1k1/1b3p1p/ppq3p1/2p5/8/1P3R1Q/PBP3PP/7K", { "lightColor" : "#f9cfa2", "darkColor" : "#c98e50" }  );</script>
+       <script>masterfen = new FEN_Diagram( "board1", "4r1k1/1b3p1p/ppq3p1/2p5/8/1P3R1Q/PBP3PP/7K", { "lightColor" : "#f9cfa2", "darkColor" : "#c98e50" }  );</script>
    </div>
 <br />
 <p>
 ...is represented by this FEN string: 
-<span style="color:green;">4r1k1/1b3p1p/ppq3p1/2p5/8/1P3R1Q/PBP3PP/7K</span>.
+<span id='fendisplay' style="color:green;">4r1k1/1b3p1p/ppq3p1/2p5/8/1P3R1Q/PBP3PP/7K</span>.
 </p>
 
 <h3>
@@ -91,7 +111,7 @@ new FEN_Diagram('boardcl2', '8/8/8/4pppp/8/4PP1k/5P1P/6K1', {'lightColor':'#f9cf
 </script></div>
 <div>
 <pre>
-new FEN_Diagram( 'boardcl1', 
+new FEN_Diagram( 'board', 
                  '8/8/8/4pppp/8/4PP1k/5P1P/6K1', 
                  { 'lightColor': '#f9cfa2', 
                    'darkColor' : '#c98e50' }
@@ -108,7 +128,7 @@ new FEN_Diagram('boardcl1', null, {'lightColor':'red', 'darkColor':'green'});
 </script></div>
 <div>
 <pre>
-new FEN_Diagram( 'boardcl1', 
+new FEN_Diagram( 'board', 
                  null, 
                  { 'lightColor': 'red', 
                    'darkColor' : 'green' }
@@ -141,7 +161,7 @@ new FEN_Diagram( 'boardcl1',
 </div>
 <div>
 <pre>
-new FEN_Diagram( 'boardall', 
+new FEN_Diagram( 'board', 
                  '8/8/8/4pppp/8/4PP1k/5P1P/6K1', 
                  { 'lightColor'    : '#f9cfa2', 
                    'darkColor'     : '#c98e50', 
@@ -166,6 +186,15 @@ new FEN_Diagram( 'boardall',
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
+   <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-39089885-5', 'auto');
+  ga('send', 'pageview');
+
+</script> 
   </body>
 </html>
