@@ -83,8 +83,26 @@
 <div style="clear:both"></div><br/>
 <p>And you can customize the colors to your specific needs by passing them in on a settings object:</p>
 
+
 <div>
-<div id='boardcl1' style="float:left;width:200px;height:200px;border:1px solid black;margin-right:10px;">
+<div id='boardcl2' style="float:left;width:240px;height:240px;border:1px solid black;margin-right:10px;">
+<script>
+new FEN_Diagram('boardcl2', '8/8/8/4pppp/8/4PP1k/5P1P/6K1', {'lightColor':'#f9cfa2', 'darkColor':'#c98e50'});
+</script></div>
+<div>
+<pre>
+new FEN_Diagram( 'boardcl1', 
+                 '8/8/8/4pppp/8/4PP1k/5P1P/6K1', 
+                 { 'lightColor': '#f9cfa2', 
+                   'darkColor' : '#c98e50' }
+               );
+</pre>
+</div>
+</div>
+<div style="clear:both"></div><br/>
+
+<div>
+<div id='boardcl1' style="float:left;width:240px;height:240px;border:1px solid black;margin-right:10px;">
 <script>
 new FEN_Diagram('boardcl1', null, {'lightColor':'red', 'darkColor':'green'});
 </script></div>
@@ -99,6 +117,47 @@ new FEN_Diagram( 'boardcl1',
 </div>
 </div>
 <div style="clear:both"></div><br/>
+<p>And you can further specify cells to be highlighted and those colors as well:<p>
+<div>
+<div id='boardall' style="width:300px;height:300px;border:1px solid black;margin-bottom:10px">
+<script>
+  new FEN_Diagram( 'boardall', 
+                   '8/8/8/4pppp/8/4PP1k/5P1P/6K1', 
+                   { 'lightColor'    : '#f9cfa2', 
+                     'darkColor'     : '#c98e50', 
+                     'lightHighlight': '#ff3333', 
+                     'darkHighlight' : '#ff6666', 
+                     'highlights'    : [ [0,0,0,0,0,0,0,0],
+                                         [0,0,0,0,0,0,0,0],
+                                         [0,0,0,0,0,0,0,0],
+                                         [0,0,0,0,0,0,0,0],
+                                         [0,0,0,0,0,0,1,1],
+                                         [0,0,0,0,0,0,1,0],
+                                         [0,0,0,0,0,0,1,0],
+                                         [0,0,0,0,0,0,0,0] ] } );
+</script>
+
+
+</div>
+<div>
+<pre>
+new FEN_Diagram( 'boardall', 
+                 '8/8/8/4pppp/8/4PP1k/5P1P/6K1', 
+                 { 'lightColor'    : '#f9cfa2', 
+                   'darkColor'     : '#c98e50', 
+                   'lightHighlight': '#ff3333', 
+                   'darkHighlight' : '#ff6666', 
+                   'highlights'    : [ [0,0,0,0,0,0,0,0],
+                                       [0,0,0,0,0,0,0,0],
+                                       [0,0,0,0,0,0,0,0],
+                                       [0,0,0,0,0,0,0,0],
+                                       [0,0,0,0,0,0,1,1],
+                                       [0,0,0,0,0,0,1,0],
+                                       [0,0,0,0,0,0,1,0],
+                                       [0,0,0,0,0,0,0,0] ] } );
+</pre>
+</div>
+</div>
 
      </section>
       <footer>
